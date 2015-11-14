@@ -1,21 +1,18 @@
 package com.project.vanswa.jsonfactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by vonstuben on 11/14/2015.
  */
 public class DataFactory {
-    ArrayList<Json> dataList = new ArrayList<Json>();
+    ArrayList<JData> dataList = new ArrayList<JData>();
 
-    public Json getData(){
-
-
+    public JData getData(){
         return null;
     }
 
-    public ArrayList<Json> getDataList(){
+    public ArrayList<JData> getDataList(){
         return dataList;
     }
 }
