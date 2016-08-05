@@ -7,12 +7,10 @@ import java.util.HashMap;
  */
 public class JData implements Data {
     // figure out how the api will return the data to you and create the class based on it
-   HashMap Data = new HashMap();
+    private HashMap Data = new HashMap();
 
     @Override
-    public void get(String key){
-        Data.get(key);
-    }
+    public String getData(String key){return (String) Data.get(key);}
 
     @Override
     public void add(String key, String value) {

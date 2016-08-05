@@ -31,6 +31,9 @@ public class Contact {
     Contact(String name){
     this.setName(name);
     }
+    Contact(){
+
+    }
 
     public String getName() {
         return name;

@@ -5,5 +5,5 @@ package com.project.vanswa.jsonfactory;
  */
 public interface Data {
     void add(String key, String value);
-    void get(String key);
+    String getData(String key);
 }

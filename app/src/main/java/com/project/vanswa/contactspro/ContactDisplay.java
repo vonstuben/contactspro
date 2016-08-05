@@ -1,56 +1,43 @@
 package com.project.vanswa.contactspro;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import com.project.vanswa.contactdao.*;
 
-public class ContactDisplay extends AppCompatActivity {
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
+import com.project.vanswa.contactdao.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ContactDisplay extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_display);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //if I use a list activity for my main thread I lose support for application tools such as setSupportActionBar(toolbar) which doesnt allow me to easily set the application name
+        //since I am new to Android and with my limited time I am not sure how to go about adding it back in.
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        //create contactDaoImpl and pass to the current view
-       ContactDaoImpl contactDao = new ContactDaoImpl();
-        //set up view for the contacts
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_contact_display, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        ContactDaoImpl contactDao = new ContactDaoImpl();
+        List<Contact> contacts = contactDao.getAllContacts();
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> phone = new ArrayList<String>();
+        for(int i =0; i<contacts.size();i++){
+            names.add(contacts.get(i).getName());
+            phone.add(contacts.get(i).getWorkPhone());
         }
 
-        return super.onOptionsItemSelected(item);
+
+        SmallListAdapter adapter = new SmallListAdapter (this,names,phone);
+        setListAdapter(adapter);
+        setContentView(R.layout.activity_contact_display);
+    }
+
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        String item = (String) getListAdapter().getItem(position);
+        Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
     }
 }
